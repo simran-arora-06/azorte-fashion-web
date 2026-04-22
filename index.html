@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Azorte Fashion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --bg: #f3ede6;
+        --bg-deep: #e5d7ca;
+        --panel: rgba(255, 251, 247, 0.82);
+        --panel-strong: #fffaf5;
+        --ink: #241816;
+        --muted: #746159;
+        --accent: #a22b2f;
+        --accent-deep: #6f171c;
+        --accent-soft: rgba(162, 43, 47, 0.11);
+        --line: rgba(36, 24, 22, 0.11);
+        --shadow: 0 30px 70px rgba(73, 38, 29, 0.14);
+        --shadow-soft: 0 18px 38px rgba(67, 33, 25, 0.08);
+        --radius-xl: 34px;
+        --radius-lg: 24px;
+        --radius-md: 18px;
+    }
+
+    body.dark-mode {
+        --bg: #120d0c;
+        --bg-deep: #050403;
+        --panel: rgba(28, 20, 18, 0.8);
+        --panel-strong: #1a1211;
+        --ink: #f4e8dd;
+        --muted: #c7ab99;
+        --accent: #e0a56a;
+        --accent-deep: #b16a38;
+        --accent-soft: rgba(224, 165, 106, 0.12);
+        --line: rgba(244, 232, 221, 0.1);
+        --shadow: 0 30px 80px rgba(0, 0, 0, 0.36);
+        --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.28);
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        min-height: 100vh;
+        font-family: "Manrope", sans-serif;
+        color: var(--ink);
+        background:
+            radial-gradient(circle at 0% 0%, rgba(162, 43, 47, 0.18), transparent 26%),
+            radial-gradient(circle at 100% 12%, rgba(198, 145, 105, 0.18), transparent 22%),
+            linear-gradient(135deg, #f7f1ea 0%, var(--bg) 48%, var(--bg-deep) 100%);
+        transition: background 0.45s ease, color 0.35s ease;
+    }
+
+    body.dark-mode {
+        background:
+            radial-gradient(circle at 0% 0%, rgba(224, 165, 106, 0.16), transparent 25%),
+            radial-gradient(circle at 100% 10%, rgba(126, 31, 31, 0.25), transparent 24%),
+            linear-gradient(140deg, #1a1311 0%, var(--bg) 44%, var(--bg-deep) 100%);
+    }
+
+    img {
+        display: block;
+        width: 100%;
+    }
+
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    button,
+    select {
+        font: inherit;
+    }
+
+    .page-shell {
+        width: min(1260px, calc(100% - 32px));
+        margin: 24px auto;
+        padding: 22px;
+        border: 1px solid rgba(255, 255, 255, 0.55);
+        border-radius: 40px;
+        background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.18)),
+            rgba(255, 249, 243, 0.46);
+        backdrop-filter: blur(20px);
+        box-shadow: var(--shadow);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .page-shell::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+            linear-gradient(120deg, rgba(255, 255, 255, 0.22), transparent 24%, transparent 76%, rgba(255, 255, 255, 0.18)),
+            linear-gradient(180deg, rgba(255, 255, 255, 0.12), transparent 48%);
+        pointer-events: none;
+    }
+
+    .topbar,
+    .hero,
+    .collection-nav,
+    main,
+    .footer-card {
+        position: relative;
+        z-index: 1;
+    }
+
+    .topbar {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 8px 6px 24px;
+    }
+
+    .brand-block {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .brand-mark {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(2.4rem, 5vw, 4rem);
+        line-height: 0.9;
+        letter-spacing: 0.16em;
+    }
+
+    .brand-copy {
+        color: var(--muted);
+        font-size: 0.85rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+    }
+
+    .top-actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .chip,
+    .ghost-link,
+    .slider-btn,
+    .theme-toggle,
+    .nav-links a,
+    .contact-pill,
+    .btn-secondary,
+    .filters select,
+    .hero-meta span {
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.66);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+    }
+
+    body.dark-mode .chip,
+    body.dark-mode .ghost-link,
+    body.dark-mode .slider-btn,
+    body.dark-mode .theme-toggle,
+    body.dark-mode .nav-links a,
+    body.dark-mode .contact-pill,
+    body.dark-mode .btn-secondary,
+    body.dark-mode .filters select,
+    body.dark-mode .hero-meta span {
+        background: rgba(255, 255, 255, 0.04);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    }
+
+    .chip,
+    .ghost-link {
+        padding: 12px 16px;
+        border-radius: 999px;
+        transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+    }
+
+    .chip {
+        font-weight: 700;
+    }
+
+    .ghost-link {
+        color: var(--muted);
+    }
+
+    .chip:hover,
+    .ghost-link:hover,
+    .nav-links a:hover,
+    .slider-btn:hover,
+    .theme-toggle:hover,
+    .btn:hover,
+    .btn-secondary:hover,
+    .product-btn:hover {
+        transform: translateY(-2px);
+    }
+
+    .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+        gap: 18px;
+        align-items: stretch;
+    }
+
+    .hero-copy,
+    .hero-card,
+    .collection-nav,
+    .section-panel,
+    .footer-card {
+        border-radius: var(--radius-xl);
+        border: 1px solid var(--line);
+        background: var(--panel);
+        backdrop-filter: blur(16px);
+    }
+
+    .hero-copy {
+        padding: clamp(30px, 5vw, 58px);
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 640px;
+        background:
+            linear-gradient(150deg, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.02)),
+            radial-gradient(circle at 90% 20%, rgba(162, 43, 47, 0.12), transparent 26%),
+            var(--panel);
+        box-shadow: var(--shadow-soft);
+    }
+
+    .hero-copy::before,
+    .hero-copy::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        pointer-events: none;
+    }
+
+    .hero-copy::before {
+        width: 340px;
+        height: 340px;
+        top: -120px;
+        right: -100px;
+        background: radial-gradient(circle, rgba(162, 43, 47, 0.16), transparent 68%);
+    }
+
+    .hero-copy::after {
+        width: 280px;
+        height: 280px;
+        left: -110px;
+        bottom: -120px;
+        background: radial-gradient(circle, rgba(196, 145, 105, 0.18), transparent 68%);
+    }
+
+    .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        width: fit-content;
+        padding: 11px 18px;
+        border-radius: 999px;
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-size: 0.84rem;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+    }
+
+    .hero-copy h1 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(3.6rem, 8vw, 6.9rem);
+        line-height: 0.88;
+        margin: 24px 0 18px;
+        max-width: 8ch;
+    }
+
+    .hero-copy p {
+        max-width: 58ch;
+        color: var(--muted);
+        font-size: 1.02rem;
+        line-height: 1.82;
+    }
+
+    .hero-meta {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 24px;
+    }
+
+    .hero-meta span {
+        padding: 11px 15px;
+        border-radius: 999px;
+        color: var(--muted);
+        font-size: 0.9rem;
+    }
+
+    .hero-cta {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-top: 30px;
+    }
+
+    .btn,
+    .btn-secondary {
+        border: none;
+        border-radius: 999px;
+        padding: 15px 24px;
+        cursor: pointer;
+        transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    }
+
+    .btn {
+        background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+        color: #fff;
+        font-weight: 800;
+        box-shadow: 0 16px 28px rgba(162, 43, 47, 0.24);
+    }
+
+    .btn-secondary {
+        color: var(--ink);
+        font-weight: 700;
+    }
+
+    .hero-card {
+        padding: 18px;
+        display: grid;
+        gap: 16px;
+        background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.6), rgba(248, 236, 228, 0.2)),
+            var(--panel);
+        box-shadow: var(--shadow-soft);
+    }
+
+    .feature-image {
+        min-height: 520px;
+        border-radius: 28px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .feature-image::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(18, 10, 9, 0.02), rgba(18, 10, 9, 0.34));
+        pointer-events: none;
+    }
+
+    .feature-image img {
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.7s ease, opacity 0.4s ease;
+    }
+
+    .feature-image:hover img,
+    .story-card:hover img,
+    .contact-card:hover img {
+        transform: scale(1.05);
+    }
+
+    .feature-tag {
+        position: absolute;
+        left: 18px;
+        right: 18px;
+        bottom: 18px;
+        z-index: 1;
+        padding: 18px;
+        border-radius: 24px;
+        background: rgba(24, 15, 13, 0.72);
+        color: #fff;
+        backdrop-filter: blur(12px);
+        max-width: 260px;
+    }
+
+    .feature-tag strong {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 1.02rem;
+    }
+
+    .slider-controls {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        flex-wrap: wrap;
+        padding: 4px 2px;
+    }
+
+    .slider-dots,
+    .slider-buttons {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .slider-dot {
+        width: 12px;
+        height: 12px;
+        border: none;
+        border-radius: 50%;
+        background: rgba(36, 24, 22, 0.18);
+        cursor: pointer;
+        transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .slider-dot.active {
+        background: var(--accent);
+        transform: scale(1.12);
+        box-shadow: 0 0 0 6px var(--accent-soft);
+    }
+
+    .slider-btn,
+    .theme-toggle {
+        border-radius: 999px;
+        padding: 12px 17px;
+        color: var(--ink);
+        cursor: pointer;
+        transition: transform 0.25s ease, background 0.25s ease;
+    }
+
+    .stats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .stat {
+        padding: 18px;
+        border-radius: 22px;
+        background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.4)),
+            var(--panel-strong);
+        border: 1px solid rgba(255, 255, 255, 0.32);
+    }
+
+    body.dark-mode .stat {
+        background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+            var(--panel-strong);
+        border-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .stat strong {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 1.45rem;
+        font-weight: 800;
+    }
+
+    .collection-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        padding: 18px 22px;
+        margin: 18px 0;
+        flex-wrap: wrap;
+        box-shadow: var(--shadow-soft);
+    }
+
+    .nav-links,
+    .filters {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .nav-links a {
+        padding: 11px 17px;
+        border-radius: 999px;
+        color: var(--muted);
+        transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+    }
+
+    .nav-links a.active {
+        background: var(--ink);
+        color: #fff;
+        border-color: transparent;
+    }
+
+    .filters select {
+        min-width: 132px;
+        padding: 12px 16px;
+        border-radius: 999px;
+        color: var(--ink);
+        outline: none;
+    }
+
+    main {
+        display: grid;
+        gap: 18px;
+    }
+
+    .section-panel {
+        padding: 24px;
+        box-shadow: var(--shadow-soft);
+    }
+
+    .section-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-bottom: 24px;
+    }
+
+    .section-head h2 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(2.2rem, 4vw, 3.2rem);
+        line-height: 0.95;
+        margin-bottom: 10px;
+    }
+
+    .section-head p {
+        max-width: 52ch;
+        color: var(--muted);
+        line-height: 1.8;
+    }
+
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+    }
+
+    .product-card {
+        border: 1px solid rgba(36, 24, 22, 0.08);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        background: var(--panel-strong);
+        box-shadow: 0 18px 34px rgba(78, 41, 31, 0.08);
+        transition: transform 0.28s ease, box-shadow 0.28s ease;
+    }
+
+    .product-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 24px 42px rgba(78, 41, 31, 0.14);
+    }
+
+    .product-media {
+        position: relative;
+        aspect-ratio: 4 / 5;
+        overflow: hidden;
+        background: #ddd;
+    }
+
+    .product-media img {
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.55s ease, filter 0.35s ease;
+    }
+
+    .product-card:hover .product-media img {
+        transform: scale(1.08);
+        filter: saturate(1.08);
+    }
+
+    .product-badge {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(255, 250, 245, 0.92);
+        color: #221714;
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    .product-body {
+        padding: 18px;
+        display: grid;
+        gap: 14px;
+    }
+
+    .product-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 14px;
+    }
+
+    .product-top h3 {
+        font-size: 1.04rem;
+        line-height: 1.4;
+    }
+
+    .product-meta {
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 0.91rem;
+    }
+
+    .price {
+        font-weight: 800;
+        white-space: nowrap;
+        transition: color 0.25s ease;
+    }
+
+    .product-card:hover .price {
+        color: var(--accent);
+    }
+
+    .product-btn {
+        width: 100%;
+        border: none;
+        border-radius: 16px;
+        padding: 13px 14px;
+        background: linear-gradient(135deg, #241816, #3d2824);
+        color: #fff;
+        cursor: pointer;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        transition: transform 0.25s ease, background 0.25s ease;
+    }
+
+    .product-btn:hover {
+        background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+    }
+
+    .editorial {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+        gap: 18px;
+    }
+
+    .story-card,
+    .contact-card {
+        min-height: 340px;
+        border-radius: var(--radius-xl);
+        overflow: hidden;
+        position: relative;
+    }
+
+    .story-card img,
+    .contact-card img {
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.65s ease;
+    }
+
+    .story-overlay,
+    .contact-overlay {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 30px;
+        background: linear-gradient(180deg, rgba(16, 10, 9, 0.04), rgba(16, 10, 9, 0.82));
+        color: #fff;
+    }
+
+    .story-overlay h3,
+    .contact-overlay h3 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(2.1rem, 4vw, 3.2rem);
+        line-height: 0.95;
+        margin-bottom: 10px;
+    }
+
+    .story-overlay p,
+    .contact-overlay p {
+        max-width: 34ch;
+        line-height: 1.7;
+    }
+
+    .footer-card {
+        margin-top: 18px;
+        padding: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        flex-wrap: wrap;
+        box-shadow: var(--shadow-soft);
+    }
+
+    .footer-card p {
+        max-width: 50ch;
+        color: var(--muted);
+        line-height: 1.75;
+    }
+
+    .contact-list {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .contact-pill {
+        padding: 12px 16px;
+        border-radius: 999px;
+    }
+
+    .fade-in {
+        animation: fadeSlide 0.65s ease;
+    }
+
+    @keyframes fadeSlide {
+        from {
+            opacity: 0;
+            transform: translateY(12px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (max-width: 1080px) {
+        .hero,
+        .editorial {
+            grid-template-columns: 1fr;
+        }
+
+        .hero-copy {
+            min-height: auto;
+        }
+
+        .feature-image {
+            min-height: 460px;
+        }
+
+        .product-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @media (max-width: 720px) {
+        .page-shell {
+            width: min(100% - 16px, 100%);
+            margin: 8px auto;
+            padding: 12px;
+            border-radius: 26px;
+        }
+
+        .topbar,
+        .collection-nav,
+        .section-head,
+        .footer-card {
+            align-items: flex-start;
+        }
+
+        .hero-copy,
+        .hero-card,
+        .section-panel,
+        .footer-card,
+        .collection-nav {
+            border-radius: 26px;
+        }
+
+        .hero-copy {
+            padding: 24px;
+        }
+
+        .hero-copy h1 {
+            max-width: none;
+            font-size: clamp(2.8rem, 14vw, 4.6rem);
+        }
+
+        .feature-image {
+            min-height: 320px;
+        }
+
+        .stats,
+        .product-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .slider-controls,
+        .hero-cta,
+        .top-actions {
+            width: 100%;
+        }
+
+        .slider-buttons,
+        .slider-btn,
+        .theme-toggle,
+        .filters,
+        .filters select {
+            width: 100%;
+        }
+
+        .slider-btn,
+        .theme-toggle,
+        .filters select,
+        .btn,
+        .btn-secondary {
+            text-align: center;
+        }
+
+        .nav-links {
+            width: 100%;
+        }
+
+        .nav-links a {
+            flex: 1 1 calc(50% - 6px);
+            text-align: center;
+        }
+    }
+</style>
+</head>
+<body>
+    <div class="page-shell">
+        <header class="topbar">
+            <div class="brand-block">
+                <div class="brand-mark">AZORTE</div>
+                <div class="brand-copy">Modern fashion for every statement</div>
+            </div>
+            <div class="top-actions">
+                <a class="ghost-link" href="#collections">New Season</a>
+                <a class="ghost-link" href="#editorial">Lookbook</a>
+                <button class="theme-toggle" type="button" id="themeToggle">Dark Luxury</button>
+                <div class="chip">Wishlist</div>
+                <div class="chip">Purchase History</div>
+            </div>
+        </header>
+
+        <section class="hero">
+            <div class="hero-copy">
+                <div class="eyebrow fade-in" id="heroEyebrow">Runway Capsule</div>
+                <h1 id="heroTitle" class="fade-in">Luxury layers for after-dark dressing.</h1>
+                <p id="heroText" class="fade-in">Build a sharper evening wardrobe with sculpted outerwear, refined monochrome looks, and accessories that carry presence from dinner to rooftop nights.</p>
+                <div class="hero-meta">
+                    <span id="heroMetaOne" class="fade-in">After-dark styling</span>
+                    <span id="heroMetaTwo" class="fade-in">Monochrome elegance</span>
+                </div>
+                <div class="hero-cta">
+                    <a class="btn" href="#collections" id="heroPrimaryCta">Explore Runway</a>
+                    <a class="btn-secondary" href="#contact">Contact Studio</a>
+                </div>
+            </div>
+
+            <div class="hero-card">
+                <div class="feature-image">
+                    <img id="heroImage" src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=80" alt="Runway inspired luxury fashion" class="fade-in">
+                    <div class="feature-tag" id="heroTag">
+                        <strong id="heroTagTitle" class="fade-in">Night Edit</strong>
+                        <span id="heroTagText" class="fade-in">Glossy textures and sleek cuts for statement evenings.</span>
+                    </div>
+                </div>
+                <div class="slider-controls">
+                    <div class="slider-dots" id="sliderDots" aria-label="Hero slides"><button class="slider-dot" type="button" aria-label="Go to slide 1"></button><button class="slider-dot active" type="button" aria-label="Go to slide 2"></button><button class="slider-dot" type="button" aria-label="Go to slide 3"></button></div>
+                    <div class="slider-buttons">
+                        <button class="slider-btn" type="button" id="prevSlide">Previous</button>
+                        <button class="slider-btn" type="button" id="nextSlide">Next</button>
+                    </div>
+                </div>
+                <div class="stats">
+                    <div class="stat">
+                        <strong>120+</strong>
+                        Fresh arrivals this week
+                    </div>
+                    <div class="stat">
+                        <strong>4.8/5</strong>
+                        Customer-loved fits
+                    </div>
+                    <div class="stat">
+                        <strong>24 hr</strong>
+                        Dispatch on top picks
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <nav class="collection-nav" id="collections">
+            <div class="nav-links">
+                <a class="active" href="#dresses">Women</a>
+                <a href="#jeans">Men</a>
+                <a href="#tops">Teen</a>
+                <a href="#editorial">Kids</a>
+            </div>
+            <div class="filters">
+                <select aria-label="Filter by size">
+                    <option selected>Size</option>
+                    <option>S</option>
+                    <option>M</option>
+                    <option>L</option>
+                    <option>XL</option>
+                </select>
+                <select aria-label="Sort products">
+                    <option selected>Sort</option>
+                    <option>Newest First</option>
+                    <option>Price: Low to High</option>
+                    <option>Price: High to Low</option>
+                </select>
+            </div>
+        </nav>
+
+        <main>
+            <section class="section-panel" id="dresses">
+                <div class="section-head">
+                    <div>
+                        <h2>Dresses</h2>
+                        <p>Fluid silhouettes and occasion-ready pieces designed for striking entrances.</p>
+                    </div>
+                    <p>From soft neutrals to statement reds, this edit balances polished tailoring with easy movement.</p>
+                </div>
+                <div class="product-grid">
+                    <article class="product-card">
+                        <div class="product-media">
+                            <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=700&q=80" alt="Satin midi dress">
+                            <span class="product-badge">Best Seller</span>
+                        </div>
+                        <div class="product-body">
+                            <div class="product-top">
+                                <div>
+                                    <h3>Satin Evening Midi</h3>
+                                    <div class="product-meta">Women &bull; Occasion</div>
+                                </div>
+                                <div class="price">&#8377;1200</div>
+                            </div>
+                            <button class="product-btn">Add to Cart</button>
+                        </div>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-media">
+                            <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=700&q=80" alt="Layered summer dress">
+                            <span class="product-badge">New Drop</span>
+                        </div>
+                        <div class="product-body">
+                            <div class="product-top">
+                                <div>
+                                    <h3>Layered Summer Dress</h3>
+                                    <div class="product-meta">Women &bull; Daywear</div>
+                                </div>
+                                <div class="price">&#8377;1500</div>
+                            </div>
+                            <button class="product-btn">Add to Cart</button>
+                        </div>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-media">
+                            <img src="https://images.unsplash.com/photo-1495385794356-15371f348c31?auto=format&fit=crop&w=700&q=80" alt="Structured cocktail dress">
+                            <span class="product-badge">Limited</span>
+                        </div>
+                        <div class="product-body">
+                            <div class="product-top">
+                                <div>
+                                    <h3>Structured Cocktail Cut</h3>
+                                    <div class="product-meta">Women &bull; Evening</div>
+                                </div>
+                                <div class="price">&#8377;1800</div>
+                            </div>
+                            <button class="product-btn">Add to Cart</button>
+                        </div>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-media">
+                            <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=700&q=80" alt="Minimal maxi dress">
+                            <span class="product-badge">Editor Pick</span>
+                        </div>
+                        <div class="product-body">
+                            <div class="product-top">
+                                <div>
+                                    <h3>Minimal Column Maxi</h3>
+                                    <div class="product-meta">Women &bull; Premium</div>
+                                </div>
+                                <div class="price">&#8377;2000</div>
+                            </div>
+                            <button class="product-btn">Add to Cart</button>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section-panel" id="jeans">
+                <div class="section-head">
+                    <div>
+                        <h2>Denim &amp; Jeans</h2>
+                        <p>Refined denim with relaxed confidence, built for repeat wear and sharper styling.</p>
+                    </div>
+                    <p>Clean washes, tapered shapes, and elevated casualwear for men and women across everyday looks.</p>
+                </div>
+                <div class="product-grid">
+                    <article class="product-card">
+                        <div class="product-media">
+                            <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=700&q=80" alt="Classic straight jeans">
+                            <span class="product-badge">Daily Wear</span>
+                        </div>
+                        <div class="product-body">
+                            <div class="product-top">
+                                <div>
+                                    <h3>Classic Straight Denim</h3>
+                                    <div class="product-meta">Men &bull; Core Fit</div>
+                                </div>
+                                <div class="price">&#8377;1000</div>
+                            </div>
+                            <button class="product-btn">Add to Cart</button>
+                        </div>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-media">
+                            <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=700&q=80" alt="Relaxed fit jeans">
+                            <span class="product-badge">Street</span>
+                        </div>
+                        <div class="product-body">
+                            <div class="product-top">
+                                <div>
+                                    <h3>Relaxed Washed Fit</h3>
+                                    <div class="product-meta">Men &bull; Casual</div>
+                                </div>
+                                <div class="price">&#8377;1300</div>
+                            </div>
+                            <button class="product-btn">Add to Cart</button>
+                        </div>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-media">
+                            <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=700&q=80" alt="Dark indigo jeans">
+                            <span class="product-badge">Tailored</span>
+                        </div>
+                        <div class="product-body">
+                            <div class="product-top">
+                                <div>
+                                    <h3>Dark Indigo Tapered</h3>
+                                    <div class="product-meta">Women &bull; Smart Casual</div>
+                                </div>
+                                <div class="price">&#8377;1600</div>
+                            </div>
+                            <button class="product-btn">Add to Cart</button>
+                        </div>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-media">
+                            <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=700&q=80" alt="Wide leg jeans">
+                            <span class="product-badge">Trend</span>
+                        </div>
+                        <div class="product-body">
+                            <div class="product-top">
+                                <div>
+                                    <h3>Wide Leg City Denim</h3>
+                                    <div class="product-meta">Women &bull; Statement Fit</div>
+                                </div>
+                                <div class="price">&#8377;1900</div>
+                            </div>
+                            <button class="product-btn">Add to Cart</button>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section-panel" id="tops">
+                <div class="section-head">
+                    <div>
+                        <h2>Tops &amp; Essentials</h2>
+                        <p>Layerable staples that carry the look, whether the mood is tailored, minimal, or playful.</p>
+                    </div>
+                    <p>Versatile cuts, breathable fabrics, and modern proportions for easy styling every day of the week.</p>
+                </div>
+                <div class="product-grid">
+                    <article class="product-card">
+                        <div class="product-media">
+                            <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=700&q=80" alt="Minimal fitted top">
+                            <span class="product-badge">Core</span>
+                        </div>
+                        <div class="product-body">
+                            <div class="product-top">
+                                <div>
+                                    <h3>Minimal Fitted Top</h3>
+                                    <div class="product-meta">Women &bull; Everyday</div>
+                                </div>
+                                <div class="price">&#8377;800</div>
+                            </div>
+                            <button class="product-btn">Add to Cart</button>
+                        </div>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-media">
+                            <img src="https://images.unsplash.com/photo-1506629905607-d9d4b8eebf0f?auto=format&fit=crop&w=700&q=80" alt="Soft knit crop top">
+                            <span class="product-badge">Soft Knit</span>
+                        </div>
+                        <div class="product-body">
+                            <div class="product-top">
+                                <div>
+                                    <h3>Soft Knit Crop</h3>
+                                    <div class="product-meta">Teen &bull; Weekend</div>
+                                </div>
+                                <div class="price">&#8377;900</div>
+                            </div>
+                            <button class="product-btn">Add to Cart</button>
+                        </div>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-media">
+                            <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=700&q=80" alt="Oversized shirt top">
+                            <span class="product-badge">Oversized</span>
+                        </div>
+                        <div class="product-body">
+                            <div class="product-top">
+                                <div>
+                                    <h3>Oversized Shirt Layer</h3>
+                                    <div class="product-meta">Men &bull; Transitional</div>
+                                </div>
+                                <div class="price">&#8377;1100</div>
+                            </div>
+                            <button class="product-btn">Add to Cart</button>
+                        </div>
+                    </article>
+
+                    <article class="product-card">
+                        <div class="product-media">
+                            <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=700&q=80" alt="Textured statement top">
+                            <span class="product-badge">Highlight</span>
+                        </div>
+                        <div class="product-body">
+                            <div class="product-top">
+                                <div>
+                                    <h3>Textured Statement Top</h3>
+                                    <div class="product-meta">Women &bull; Evening</div>
+                                </div>
+                                <div class="price">&#8377;1200</div>
+                            </div>
+                            <button class="product-btn">Add to Cart</button>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="editorial" id="editorial">
+                <div class="story-card">
+                    <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=80" alt="Editorial fashion lookbook image">
+                    <div class="story-overlay">
+                        <h3>Lookbook Stories</h3>
+                        <p>Build a wardrobe around sharp staples, rich tones, and elevated everyday silhouettes.</p>
+                    </div>
+                </div>
+                <div class="contact-card" id="contact">
+                    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=80" alt="Customer support fashion studio">
+                    <div class="contact-overlay">
+                        <h3>Style Support</h3>
+                        <p>Email, call, or connect with the Azorte team for fit advice and order help.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer-card">
+            <div>
+                <div class="brand-mark">AZORTE</div>
+                <p>Contact us for styling assistance, order updates, and premium shopping support.</p>
+            </div>
+            <div class="contact-list">
+                <div class="contact-pill">support@azorte.com</div>
+                <div class="contact-pill">+91 9876543210</div>
+                <div class="contact-pill">Open 10 AM - 8 PM</div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const heroSlides = [
+            {
+                eyebrow: "Spring Edit 2026",
+                title: "Fashion built for bold city days.",
+                text: "A richer Azorte storefront with editorial energy, elevated shopping cards, and a premium red-toned visual system. Discover dresses, denim, and essentials curated for effortless everyday styling.",
+                metaOne: "Premium tailoring",
+                metaTwo: "City-ready silhouettes",
+                cta: "Shop Collection",
+                image: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=900&q=80",
+                imageAlt: "Featured Azorte fashion collection",
+                tagTitle: "Weekend Occasionwear",
+                tagText: "Draped silhouettes, clean cuts, and standout texture."
+            },
+            {
+                eyebrow: "Runway Capsule",
+                title: "Luxury layers for after-dark dressing.",
+                text: "Build a sharper evening wardrobe with sculpted outerwear, refined monochrome looks, and accessories that carry presence from dinner to rooftop nights.",
+                metaOne: "After-dark styling",
+                metaTwo: "Monochrome elegance",
+                cta: "Explore Runway",
+                image: "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=80",
+                imageAlt: "Runway inspired luxury fashion",
+                tagTitle: "Night Edit",
+                tagText: "Glossy textures and sleek cuts for statement evenings."
+            },
+            {
+                eyebrow: "Denim Studio",
+                title: "The modern uniform starts with strong denim.",
+                text: "Relaxed fits, tailored jeans, and polished staples come together in a versatile wardrobe built for everyday movement and sharper casual looks.",
+                metaOne: "Elevated casualwear",
+                metaTwo: "All-day comfort",
+                cta: "Shop Denim",
+                image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=900&q=80",
+                imageAlt: "Modern denim fashion portrait",
+                tagTitle: "Denim Refresh",
+                tagText: "New cuts designed to anchor every off-duty look."
+            }
+        ];
+
+        const heroEyebrow = document.getElementById("heroEyebrow");
+        const heroTitle = document.getElementById("heroTitle");
+        const heroText = document.getElementById("heroText");
+        const heroMetaOne = document.getElementById("heroMetaOne");
+        const heroMetaTwo = document.getElementById("heroMetaTwo");
+        const heroPrimaryCta = document.getElementById("heroPrimaryCta");
+        const heroImage = document.getElementById("heroImage");
+        const heroTagTitle = document.getElementById("heroTagTitle");
+        const heroTagText = document.getElementById("heroTagText");
+        const sliderDots = document.getElementById("sliderDots");
+        const themeToggle = document.getElementById("themeToggle");
+        const animatedNodes = [heroEyebrow, heroTitle, heroText, heroMetaOne, heroMetaTwo, heroImage, heroTagTitle, heroTagText];
+        let currentSlide = 0;
+        let slideTimer;
+
+        function renderDots() {
+            sliderDots.innerHTML = "";
+            heroSlides.forEach((_, index) => {
+                const dot = document.createElement("button");
+                dot.className = `slider-dot${index === currentSlide ? " active" : ""}`;
+                dot.type = "button";
+                dot.setAttribute("aria-label", `Go to slide ${index + 1}`);
+                dot.addEventListener("click", () => setSlide(index));
+                sliderDots.appendChild(dot);
+            });
+        }
+
+        function animateHero() {
+            animatedNodes.forEach((node) => {
+                node.classList.remove("fade-in");
+                void node.offsetWidth;
+                node.classList.add("fade-in");
+            });
+        }
+
+        function setSlide(index) {
+            currentSlide = (index + heroSlides.length) % heroSlides.length;
+            const slide = heroSlides[currentSlide];
+            heroEyebrow.textContent = slide.eyebrow;
+            heroTitle.textContent = slide.title;
+            heroText.textContent = slide.text;
+            heroMetaOne.textContent = slide.metaOne;
+            heroMetaTwo.textContent = slide.metaTwo;
+            heroPrimaryCta.textContent = slide.cta;
+            heroImage.src = slide.image;
+            heroImage.alt = slide.imageAlt;
+            heroTagTitle.textContent = slide.tagTitle;
+            heroTagText.textContent = slide.tagText;
+            renderDots();
+            animateHero();
+        }
+
+        function startSlider() {
+            clearInterval(slideTimer);
+            slideTimer = setInterval(() => {
+                setSlide(currentSlide + 1);
+            }, 4500);
+        }
+
+        document.getElementById("prevSlide").addEventListener("click", () => {
+            setSlide(currentSlide - 1);
+            startSlider();
+        });
+
+        document.getElementById("nextSlide").addEventListener("click", () => {
+            setSlide(currentSlide + 1);
+            startSlider();
+        });
+
+        themeToggle.addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+            themeToggle.textContent = document.body.classList.contains("dark-mode") ? "Light Mode" : "Dark Luxury";
+        });
+
+        setSlide(0);
+        startSlider();
+
+        document.querySelectorAll(".product-btn").forEach((button) => {
+            button.addEventListener("click", () => {
+                alert("Added to cart!");
+            });
+        });
+    </script>
+</body>
+</html>
