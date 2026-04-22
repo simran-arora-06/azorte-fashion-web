@@ -1,3 +1,5 @@
-author-simran
-A AI and ML seminar project.
-Made with codex
+Author-Simran
+<br>
+A AI and ML Workshop project.
+<br>
+Made with codex.
